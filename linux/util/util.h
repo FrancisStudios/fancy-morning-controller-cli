@@ -7,6 +7,10 @@
 namespace FancyUtil
 {
     void printBanner();
+    void printNoSerialPortSelectedWording();
+    void printFetchSerialError();
+    void printFetchSerialSuccess();
+    int defauldBaud();
 };
 
 #endif

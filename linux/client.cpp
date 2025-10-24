@@ -4,39 +4,61 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#if defined(__linux__) || defined(__APPLE__)
-#define SERIAL_PORT "/dev/ttyUSB0"
-#endif
-
 int main(int argc, char *argv[])
 {
     serialib serial;
+    bool isSerialDeviceConfirmed = false;
+    char ttyDeviceId[32];
+    char _serialPortIdentifier[50] = "/dev/";
 
     if (argc <= 1)
     {
         FancyUtil::printBanner();
+        FancyUtil::printNoSerialPortSelectedWording();
+
+        while (!isSerialDeviceConfirmed)
+        {
+            printf("\e[0;35m/dev/\e[0;32m");
+            scanf("%31s", ttyDeviceId);
+            printf("\e[0m ");
+
+            strcat(_serialPortIdentifier, ttyDeviceId);
+
+            char _s_Error = serial.openDevice(
+                _serialPortIdentifier,
+                FancyUtil::defauldBaud());
+
+            if (_s_Error != 1)
+            {
+                FancyUtil::printFetchSerialError();
+            }
+            else
+            {
+                isSerialDeviceConfirmed = true;
+
+                // Create the string
+                char buffer[15] = "handshake\n";
+
+                // Write the string on the serial device
+                serial.writeString(buffer);
+
+                FancyUtil::printFetchSerialSuccess();
+            }
+        }
     }
 
-    char errorOpening = serial.openDevice("/dev/ttyUSB0", 9600);
+    printf("Successful connection to %s\n", "/dev/ttyUSB0");
 
-    // If connection fails, return the error code otherwise, display a success message
-    if (errorOpening != 1)
-    {
-        printf("Error while opening serial\n");
-        return errorOpening;
-    }
+    char buffer[50];
+    // // Create the string
+    // char buffer[15] = "hello\n";
 
-    printf("Successful connection to %s\n", SERIAL_PORT);
-
-    // Create the string
-    char buffer[15] = "hello\n";
-
-    // Write the string on the serial device
-    serial.writeString(buffer);
-    printf("String sent: %s", buffer);
+    // // Write the string on the serial device
+    // serial.writeString(buffer);
+    // printf("String sent: %s", buffer);
 
     // Read the string
-    serial.readString(buffer, '\n', 14, 2000);
+    serial.readString(buffer, '\n', 50, 2000);
     printf("String read: %s\n", buffer);
 
     // Close the serial device
