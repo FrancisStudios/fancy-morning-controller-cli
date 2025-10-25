@@ -11,6 +11,7 @@ namespace FancyUtil
     void printFetchSerialError();
     void printFetchSerialSuccess();
     int defauldBaud();
+    const char* serialDevicePrefix();
 };
 
 #endif

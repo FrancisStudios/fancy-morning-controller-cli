@@ -1,12 +1,18 @@
 #include "util.h"
 
 const int DEFAULT_BAUDRATE = 9600;
+constexpr const char SERIAL_DEVICE_PREFIX[6] = "/dev/";
 
 namespace FancyUtil
 {
     int defauldBaud()
     {
         return DEFAULT_BAUDRATE;
+    }
+
+    const char* serialDevicePrefix()
+    {
+        return SERIAL_DEVICE_PREFIX;
     }
 
     void printBanner()

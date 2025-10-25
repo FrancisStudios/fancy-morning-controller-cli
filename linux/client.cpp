@@ -9,7 +9,8 @@ int main(int argc, char *argv[])
     serialib serial;
     bool isSerialDeviceConfirmed = false;
     char ttyDeviceId[32];
-    char _serialPortIdentifier[50] = "/dev/";
+    char _serialPortIdentifier[50] = "";
+    strcpy(_serialPortIdentifier, FancyUtil::serialDevicePrefix());
 
     if (argc <= 1)
     {
@@ -31,6 +32,8 @@ int main(int argc, char *argv[])
             if (_s_Error != 1)
             {
                 FancyUtil::printFetchSerialError();
+                strcpy(_serialPortIdentifier, FancyUtil::serialDevicePrefix());
+                printf("%s\n", _serialPortIdentifier);
             }
             else
             {
@@ -45,6 +48,8 @@ int main(int argc, char *argv[])
                 FancyUtil::printFetchSerialSuccess();
             }
         }
+    } else {
+
     }
 
     printf("Successful connection to %s\n", "/dev/ttyUSB0");
