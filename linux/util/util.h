@@ -11,6 +11,8 @@
 
 #pragma once
 #include <stdio.h>
+#include "../lib/serialib.h"
+#include <unistd.h>
 
 namespace FancyUtil
 {
@@ -21,6 +23,7 @@ namespace FancyUtil
     void printHandshakeFailed();
     void printHandshakeSuccess();
     void printSerialPortInserted(char *portID);
+    bool testSerialConnection(serialib serial, char *_serialPortIdentifier);
     int defauldBaud();
     const char *serialDevicePrefix();
     const char *handshakeSign();

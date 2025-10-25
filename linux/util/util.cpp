@@ -35,6 +35,46 @@ namespace FancyUtil
         return HANDSHAKE_RESPONSE;
     }
 
+    bool testSerialConnection(serialib serial, char *_serialPortIdentifier)
+    {
+        char _s_Error = serial.openDevice(
+            _serialPortIdentifier,
+            defauldBaud());
+
+        if (_s_Error != 1)
+        {
+            printFetchSerialError();
+            strcpy(_serialPortIdentifier, serialDevicePrefix());
+        }
+        else
+        {
+
+            char buffer[15] = "";
+            strcpy(buffer, handshakeSign());
+
+            /* Write Fancy Morning Handshake To Serial */
+            serial.writeString(buffer);
+
+            /* Read Response Into Buffer */
+            serial.readString(buffer, '\n', 50, 2000);
+
+            if (strcmp(buffer, handshakeResponse()) == 0)
+            {
+                printFetchSerialSuccess();
+                printHandshakeSuccess();
+                return true;
+            }
+            else
+            {
+                printFetchSerialSuccess();
+                printHandshakeFailed();
+                strcpy(_serialPortIdentifier, serialDevicePrefix());
+            }
+        }
+
+        return false;
+    }
+
     void printSerialPortInserted(char *portID)
     {
         printf("Serial port inserted via args:\e[0;95m%s\e[0m\n", portID);
@@ -75,7 +115,7 @@ namespace FancyUtil
 
     void printHandshakeSuccess()
     {
-        printf("\e[0;32m [√] Hanshake was successful, device connected\e[0m \n");
+        printf("\e[0;32m [√] Handshake was successful, device connected\e[0m \n");
     }
 
 };

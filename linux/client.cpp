@@ -32,40 +32,8 @@ int main(int argc, char *argv[])
 
             strcat(_serialPortIdentifier, ttyDeviceId);
 
-            char _s_Error = serial.openDevice(
-                _serialPortIdentifier,
-                FancyUtil::defauldBaud());
-
-            if (_s_Error != 1)
-            {
-                FancyUtil::printFetchSerialError();
-                strcpy(_serialPortIdentifier, FancyUtil::serialDevicePrefix());
-            }
-            else
-            {
-
-                char buffer[15] = "";
-                strcpy(buffer, FancyUtil::handshakeSign());
-
-                /* Write Fancy Morning Handshake To Serial */
-                serial.writeString(buffer);
-
-                /* Read Response Into Buffer */
-                serial.readString(buffer, '\n', 50, 2000);
-
-                if (strcmp(buffer, FancyUtil::handshakeResponse()) == 0)
-                {
-                    FancyUtil::printFetchSerialSuccess();
-                    FancyUtil::printHandshakeSuccess();
-                    isSerialDeviceConfirmed = true;
-                }
-                else
-                {
-                    FancyUtil::printFetchSerialSuccess();
-                    FancyUtil::printHandshakeFailed();
-                    strcpy(_serialPortIdentifier, FancyUtil::serialDevicePrefix());
-                }
-            }
+            isSerialDeviceConfirmed =
+                FancyUtil::testSerialConnection(serial, _serialPortIdentifier);
         }
     }
     else
@@ -73,9 +41,11 @@ int main(int argc, char *argv[])
         /* If tty Device Is Passed As An Arg */
         const char *serialPortIdInput = argv[1];
         strcpy(_serialPortIdentifier, serialPortIdInput);
-    
+
         FancyUtil::printBanner();
         FancyUtil::printSerialPortInserted(_serialPortIdentifier);
+
+        FancyUtil::testSerialConnection(serial, _serialPortIdentifier);
     }
 
     serial.closeDevice();
