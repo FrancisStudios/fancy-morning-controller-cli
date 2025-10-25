@@ -35,6 +35,11 @@ namespace FancyUtil
         return HANDSHAKE_RESPONSE;
     }
 
+    void printSerialPortInserted(char *portID)
+    {
+        printf("Serial port inserted via args:\e[0;95m%s\e[0m\n", portID);
+    }
+
     void printBanner()
     {
         printf("\e[1;36m _______                          _______                    __              \n");

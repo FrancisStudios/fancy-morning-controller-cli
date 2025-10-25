@@ -20,6 +20,7 @@ namespace FancyUtil
     void printFetchSerialSuccess();
     void printHandshakeFailed();
     void printHandshakeSuccess();
+    void printSerialPortInserted(char *portID);
     int defauldBaud();
     const char *serialDevicePrefix();
     const char *handshakeSign();

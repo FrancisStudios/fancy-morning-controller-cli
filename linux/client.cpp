@@ -70,6 +70,12 @@ int main(int argc, char *argv[])
     }
     else
     {
+        /* If tty Device Is Passed As An Arg */
+        const char *serialPortIdInput = argv[1];
+        strcpy(_serialPortIdentifier, serialPortIdInput);
+    
+        FancyUtil::printBanner();
+        FancyUtil::printSerialPortInserted(_serialPortIdentifier);
     }
 
     serial.closeDevice();
