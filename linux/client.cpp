@@ -1,4 +1,11 @@
-// Serial library
+/**
+ *  ------ [ Property of Francis Studios ] ------
+ * ==============================================
+ * This is an open source project, feel free to use
+ * .. github:https://github.com/francisstudios ..
+ * ____ ©2025 Francis Studios Softwares by L. ___
+ */
+
 #include "./lib/serialib.h"
 #include "./util/util.h"
 #include <unistd.h>
@@ -46,9 +53,6 @@ int main(int argc, char *argv[])
                 /* Read Response Into Buffer */
                 serial.readString(buffer, '\n', 50, 2000);
 
-                printf("response:%s: \n", buffer);
-                printf("cmp %d",strcmp(buffer, "FancyMorning"));
-
                 if (strcmp(buffer, FancyUtil::handshakeResponse()) == 0)
                 {
                     FancyUtil::printFetchSerialSuccess();
@@ -68,21 +72,6 @@ int main(int argc, char *argv[])
     {
     }
 
-    printf("Successful connection to %s\n", "/dev/ttyUSB0");
-
-    char buffer[50];
-    // // Create the string
-    // char buffer[15] = "hello\n";
-
-    // // Write the string on the serial device
-    // serial.writeString(buffer);
-    // printf("String sent: %s", buffer);
-
-    // Read the string
-    serial.readString(buffer, '\n', 50, 2000);
-    printf("String read: %s\n", buffer);
-
-    // Close the serial device
     serial.closeDevice();
 
     return 0;
