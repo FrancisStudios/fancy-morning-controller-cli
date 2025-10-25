@@ -10,8 +10,12 @@ namespace FancyUtil
     void printNoSerialPortSelectedWording();
     void printFetchSerialError();
     void printFetchSerialSuccess();
+    void printHandshakeFailed();
+    void printHandshakeSuccess();
     int defauldBaud();
-    const char* serialDevicePrefix();
+    const char *serialDevicePrefix();
+    const char *handshakeSign();
+    const char *handshakeResponse();
 };
 
 #endif

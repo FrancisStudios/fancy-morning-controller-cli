@@ -33,23 +33,39 @@ int main(int argc, char *argv[])
             {
                 FancyUtil::printFetchSerialError();
                 strcpy(_serialPortIdentifier, FancyUtil::serialDevicePrefix());
-                printf("%s\n", _serialPortIdentifier);
             }
             else
             {
-                isSerialDeviceConfirmed = true;
 
-                // Create the string
-                char buffer[15] = "handshake\n";
+                char buffer[15] = "";
+                strcpy(buffer, FancyUtil::handshakeSign());
 
-                // Write the string on the serial device
+                /* Write Fancy Morning Handshake To Serial */
                 serial.writeString(buffer);
 
-                FancyUtil::printFetchSerialSuccess();
+                /* Read Response Into Buffer */
+                serial.readString(buffer, '\n', 50, 2000);
+
+                printf("response:%s: \n", buffer);
+                printf("cmp %d",strcmp(buffer, "FancyMorning"));
+
+                if (strcmp(buffer, FancyUtil::handshakeResponse()) == 0)
+                {
+                    FancyUtil::printFetchSerialSuccess();
+                    FancyUtil::printHandshakeSuccess();
+                    isSerialDeviceConfirmed = true;
+                }
+                else
+                {
+                    FancyUtil::printFetchSerialSuccess();
+                    FancyUtil::printHandshakeFailed();
+                    strcpy(_serialPortIdentifier, FancyUtil::serialDevicePrefix());
+                }
             }
         }
-    } else {
-
+    }
+    else
+    {
     }
 
     printf("Successful connection to %s\n", "/dev/ttyUSB0");

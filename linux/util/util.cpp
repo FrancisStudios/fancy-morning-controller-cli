@@ -2,6 +2,8 @@
 
 const int DEFAULT_BAUDRATE = 9600;
 constexpr const char SERIAL_DEVICE_PREFIX[6] = "/dev/";
+constexpr const char HANDSHAKE_SIGN[11] = "handshake\n";
+constexpr const char HANDSHAKE_RESPONSE[14] = "FancyMorning";
 
 namespace FancyUtil
 {
@@ -10,9 +12,19 @@ namespace FancyUtil
         return DEFAULT_BAUDRATE;
     }
 
-    const char* serialDevicePrefix()
+    const char *serialDevicePrefix()
     {
         return SERIAL_DEVICE_PREFIX;
+    }
+
+    const char *handshakeSign()
+    {
+        return HANDSHAKE_SIGN;
+    }
+
+    const char *handshakeResponse()
+    {
+        return HANDSHAKE_RESPONSE;
     }
 
     void printBanner()
@@ -41,6 +53,16 @@ namespace FancyUtil
     void printFetchSerialSuccess()
     {
         printf("\n\e[0;32m [√] Serial device connected successfully \e[0m \n");
+    }
+
+    void printHandshakeFailed()
+    {
+        printf("\e[0;31m [X] Handshake signature failed \e[0m \n");
+    }
+
+    void printHandshakeSuccess()
+    {
+        printf("\e[0;32m [√] Hanshake was successful, device connected\e[0m \n");
     }
 
 };
