@@ -96,14 +96,28 @@ namespace FancyUtil
         printf("Serial port inserted via args:\e[0;95m%s\e[0m\n", portID);
     }
 
-    void printBanner()
+    void printBanner(bool isCanonical)
     {
-        printf("\e[1;36m _______                          _______                    __              \n");
-        printf("\e[1;36m|    ___|.---.-.-----.----.--.--.|   |   |.-----.----.-----.|__|.-----.-----.\n");
-        printf("\e[0;35m|    ___||  _  |     |  __|  |  ||       ||  _  |   _|     ||  ||     |  _  |\n");
-        printf("\e[1;95m|___|    |___._|__|__|____|___  ||__|_|__||_____|__| |__|__||__||__|__|___  |\n");
-        printf("\e[1;34m                          |_____|                                     |_____|\n");
-        printf("by Francis Studios | github.com/francisstudios\e[0m\n\n");
+        /* I know I could've made it nicer - no code repeats - shut up! :P XD */
+        switch (isCanonical)
+        {
+        case true:
+            printf("\e[1;36m _______                          _______                    __              \n");
+            printf("\e[1;36m|    ___|.---.-.-----.----.--.--.|   |   |.-----.----.-----.|__|.-----.-----.\n");
+            printf("\e[0;35m|    ___||  _  |     |  __|  |  ||       ||  _  |   _|     ||  ||     |  _  |\n");
+            printf("\e[1;95m|___|    |___._|__|__|____|___  ||__|_|__||_____|__| |__|__||__||__|__|___  |\n");
+            printf("\e[1;34m                          |_____|                                     |_____|\n");
+            printf("developed by Francis Studios | github.com/francisstudios\e[0m\n\n");
+            break;
+        case false:
+            printw("\e[1;36m _______                          _______                    __              \n");
+            printw("\e[1;36m|    ___|.---.-.-----.----.--.--.|   |   |.-----.----.-----.|__|.-----.-----.\n");
+            printw("\e[0;35m|    ___||  _  |     |  __|  |  ||       ||  _  |   _|     ||  ||     |  _  |\n");
+            printw("\e[1;95m|___|    |___._|__|__|____|___  ||__|_|__||_____|__| |__|__||__||__|__|___  |\n");
+            printw("\e[1;34m                          |_____|                                     |_____|\n");
+            printw("developed by Francis Studios | github.com/francisstudios\e[0m\n\n");
+            break;
+        }
     }
 
     void printNoSerialPortSelectedWording()

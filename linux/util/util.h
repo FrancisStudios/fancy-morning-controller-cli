@@ -17,7 +17,7 @@
 
 namespace FancyUtil
 {
-    void printBanner();
+    void printBanner(bool isCanonical = true);
     void printNoSerialPortSelectedWording();
     void printFetchSerialError();
     void printFetchSerialSuccess();
