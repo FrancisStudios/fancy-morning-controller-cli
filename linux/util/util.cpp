@@ -75,6 +75,22 @@ namespace FancyUtil
         return false;
     }
 
+    int selectFromMenu()
+    {
+        initscr();
+        cbreak();
+        noecho();
+        printw("Válassz a menüböl...\n");
+        refresh();
+
+        int ch = getch();
+        endwin();
+
+        printf("Karakter amit benyomtál: %i", ch);
+
+        return 1;
+    }
+
     void printSerialPortInserted(char *portID)
     {
         printf("Serial port inserted via args:\e[0;95m%s\e[0m\n", portID);

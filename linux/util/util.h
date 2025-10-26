@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include "../lib/serialib.h"
 #include <unistd.h>
+#include <ncurses.h>
 
 namespace FancyUtil
 {
@@ -24,6 +25,7 @@ namespace FancyUtil
     void printHandshakeSuccess();
     void printSerialPortInserted(char *portID);
     bool testSerialConnection(serialib serial, char *_serialPortIdentifier);
+    int selectFromMenu();
     int defauldBaud();
     const char *serialDevicePrefix();
     const char *handshakeSign();

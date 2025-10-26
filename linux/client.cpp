@@ -48,6 +48,8 @@ int main(int argc, char *argv[])
         FancyUtil::testSerialConnection(serial, _serialPortIdentifier);
     }
 
+    FancyUtil::selectFromMenu();
+
     serial.closeDevice();
 
     return 0;
