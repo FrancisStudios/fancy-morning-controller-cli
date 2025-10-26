@@ -10,9 +10,15 @@
 #include "./util/util.h"
 #include <unistd.h>
 #include <stdio.h>
+#include <chrono>
+#include <thread>
 
 int main(int argc, char *argv[])
 {
+
+    using namespace std::this_thread;
+    using namespace std::chrono;
+
     serialib serial;
     bool isSerialDeviceConfirmed = false;
     char ttyDeviceId[32];
@@ -47,6 +53,8 @@ int main(int argc, char *argv[])
 
         FancyUtil::testSerialConnection(serial, _serialPortIdentifier);
     }
+
+    sleep_for(milliseconds(1000));
 
     FancyUtil::selectFromMenu();
 
