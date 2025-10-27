@@ -24,6 +24,7 @@ namespace FancyUtil
     void printHandshakeFailed();
     void printHandshakeSuccess();
     void printSerialPortInserted(char *portID);
+    void printMenu();
     bool testSerialConnection(serialib serial, char *_serialPortIdentifier);
     int selectFromMenu();
     int defauldBaud();

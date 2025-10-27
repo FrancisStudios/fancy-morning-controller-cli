@@ -77,15 +77,28 @@ namespace FancyUtil
 
     int selectFromMenu()
     {
+        const bool notCanonical = false;
+
         initscr();
         cbreak();
         noecho();
-        printw("Válassz a menüböl...\n");
-        refresh();
 
-        int ch = getch();
+        printBanner(notCanonical);
+        printMenu();
+
+        int ch = 0;
+        bool isValidOptionSelected = false;
+
+        while (!isValidOptionSelected)
+        {
+            refresh();
+            ch = getch();
+
+            if (49 <= ch && ch <= 51)
+                isValidOptionSelected = true;
+        }
+
         endwin();
-
         printf("Karakter amit benyomtál: %i", ch);
 
         return 1;
@@ -110,12 +123,12 @@ namespace FancyUtil
             printf("developed by Francis Studios | github.com/francisstudios\e[0m\n\n");
             break;
         case false:
-            printw("\e[1;36m _______                          _______                    __              \n");
-            printw("\e[1;36m|    ___|.---.-.-----.----.--.--.|   |   |.-----.----.-----.|__|.-----.-----.\n");
-            printw("\e[0;35m|    ___||  _  |     |  __|  |  ||       ||  _  |   _|     ||  ||     |  _  |\n");
-            printw("\e[1;95m|___|    |___._|__|__|____|___  ||__|_|__||_____|__| |__|__||__||__|__|___  |\n");
-            printw("\e[1;34m                          |_____|                                     |_____|\n");
-            printw("developed by Francis Studios | github.com/francisstudios\e[0m\n\n");
+            printw(" _______                          _______                    __              \n");
+            printw("|    ___|.---.-.-----.----.--.--.|   |   |.-----.----.-----.|__|.-----.-----.\n");
+            printw("|    ___||  _  |     |  __|  |  ||       ||  _  |   _|     ||  ||     |  _  |\n");
+            printw("|___|    |___._|__|__|____|___  ||__|_|__||_____|__| |__|__||__||__|__|___  |\n");
+            printw("                          |_____|                                     |_____|\n");
+            printw("developed by Francis Studios | github.com/francisstudios\n\n");
             break;
         }
     }
@@ -148,4 +161,11 @@ namespace FancyUtil
         printf("\e[0;32m [√] Handshake was successful, device connected\e[0m \n");
     }
 
+    void printMenu()
+    {
+        printw("Choose from the following options (press a number)...\n");
+        printw("\n\n- [1] Program device (for standalone operation)\n");
+        printw("- [2] Control device from CLI\n");
+        printw("- [3] Manual page (to learn about scripting)\n\n");
+    }
 };
