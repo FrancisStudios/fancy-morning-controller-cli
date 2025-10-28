@@ -128,14 +128,22 @@ namespace FancyUtil
 
     void managementUI(bool isProgramming)
     {
+        bool exit = false;
         initscr();
         cbreak();
         noecho();
 
         printManagementHeader(isProgramming);
+        printControlsHeader(isProgramming);
 
-        refresh();
-        int ch = getch();
+        while (!exit)
+        {
+            refresh();
+            int ch = getch();
+
+            printw("Mennyomva %i\n", ch);
+        }
+
         endwin();
     }
 
@@ -206,6 +214,7 @@ namespace FancyUtil
 
     void printManagementHeader(bool isProgramming)
     {
+        clear();
         for (int i = 0; i <= 4; i++)
         {
             printw(
@@ -215,5 +224,17 @@ namespace FancyUtil
                     ? Programming[i]
                     : Control[i]);
         }
+    }
+
+    void printControlsHeader(bool isProgramming)
+    {
+        const char *EXIT = "[E]xit";
+        const char *PROGRAM = "[P]rogram";
+        const char *START = "[S]tart";
+        const char *TIME = "[T]ime";
+        const char *POINTS = "[D]atapoints";
+        const char *NEXT = "[N]ext";
+
+        printw("%s   %s   %s", EXIT, START, NEXT);
     }
 }
