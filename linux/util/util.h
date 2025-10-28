@@ -25,6 +25,7 @@ namespace FancyUtil
     void printHandshakeSuccess();
     void printSerialPortInserted(char *portID);
     void printMenu();
+    void printManagementHeader(bool isProgramming);
     void managementUI(bool isProgramming);
     bool testSerialConnection(serialib serial, char *_serialPortIdentifier);
     int selectFromMenu();
@@ -36,7 +37,6 @@ namespace FancyUtil
 
 namespace FancyAscii
 {
-
 };
 
 #endif

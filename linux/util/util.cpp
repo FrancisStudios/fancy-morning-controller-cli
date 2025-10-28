@@ -13,6 +13,31 @@ constexpr const char SERIAL_DEVICE_PREFIX[6] = "/dev/";
 constexpr const char HANDSHAKE_SIGN[11] = "handshake\n";
 constexpr const char HANDSHAKE_RESPONSE[14] = "FancyMorning";
 
+const char *Fancy[] = {
+    " _______                         ",
+    "|    ___|.---.-.-----.----.--.--.",
+    "|    ___||  _  |     |  __|  |  |",
+    "|___|    |___._|__|__|____|___  |",
+    "                          |_____|"};
+const char *Morning[] = {
+    " _______                    __              ",
+    "|   |   |.-----.----.-----.|__|.-----.-----.",
+    "|       ||  _  |   _|     ||  ||     |  _  |",
+    "|__|_|__||_____|__| |__|__||__||__|__|___  |",
+    "                                     |_____|"};
+const char *Control[] = {
+    "                      ",
+    " ______ __         __ ",
+    "|      |  |_.----.|  |",
+    "|   ---|   _|   _||  |",
+    "|______|____|__|  |__|"};
+const char *Programming[] = {
+    " ______                   ",
+    "|   __ \\.----.-----.-----.",
+    "|    __/|   _|  _  |  _  |",
+    "|___|   |__| |_____|___  |",
+    "                   |_____|"};
+
 namespace FancyUtil
 {
     int defauldBaud()
@@ -103,6 +128,15 @@ namespace FancyUtil
 
     void managementUI(bool isProgramming)
     {
+        initscr();
+        cbreak();
+        noecho();
+
+        printManagementHeader(isProgramming);
+
+        refresh();
+        int ch = getch();
+        endwin();
     }
 
     void printSerialPortInserted(char *portID)
@@ -169,9 +203,17 @@ namespace FancyUtil
         printw("- [2] Control device from CLI\n");
         printw("- [3] Manual page (to learn about scripting)\n\n");
     }
-};
 
-namespace FancyAscii
-{
-
-};
+    void printManagementHeader(bool isProgramming)
+    {
+        for (int i = 0; i <= 4; i++)
+        {
+            printw(
+                "%s%s\n",
+                Fancy[i],
+                isProgramming
+                    ? Programming[i]
+                    : Control[i]);
+        }
+    }
+}
