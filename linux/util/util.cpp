@@ -97,11 +97,12 @@ namespace FancyUtil
             if (49 <= ch && ch <= 51)
                 isValidOptionSelected = true;
         }
-
         endwin();
-        printf("Karakter amit benyomtál: %i", ch);
+        return ch;
+    }
 
-        return 1;
+    void managementUI(bool isProgramming)
+    {
     }
 
     void printSerialPortInserted(char *portID)
@@ -168,4 +169,9 @@ namespace FancyUtil
         printw("- [2] Control device from CLI\n");
         printw("- [3] Manual page (to learn about scripting)\n\n");
     }
+};
+
+namespace FancyAscii
+{
+
 };

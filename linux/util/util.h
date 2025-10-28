@@ -25,12 +25,18 @@ namespace FancyUtil
     void printHandshakeSuccess();
     void printSerialPortInserted(char *portID);
     void printMenu();
+    void managementUI(bool isProgramming);
     bool testSerialConnection(serialib serial, char *_serialPortIdentifier);
     int selectFromMenu();
     int defauldBaud();
     const char *serialDevicePrefix();
     const char *handshakeSign();
     const char *handshakeResponse();
+};
+
+namespace FancyAscii
+{
+
 };
 
 #endif

@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
 
     serialib serial;
     bool isSerialDeviceConfirmed = false;
+    bool isProgramming = true;
+    bool isControlMenu = !isProgramming;
     char ttyDeviceId[32];
     char _serialPortIdentifier[50] = "";
     strcpy(_serialPortIdentifier, FancyUtil::serialDevicePrefix());
@@ -56,7 +58,23 @@ int main(int argc, char *argv[])
 
     sleep_for(milliseconds(1000));
 
-    FancyUtil::selectFromMenu();
+    switch (FancyUtil::selectFromMenu())
+    {
+    case 49:
+        FancyUtil::managementUI(isProgramming);
+        break;
+
+    case 50:
+        FancyUtil::managementUI(isControlMenu);
+        break;
+
+    case 51:
+        break;
+
+    default:
+        /* TODO: maybe some error handling */
+        break;
+    }
 
     serial.closeDevice();
 
