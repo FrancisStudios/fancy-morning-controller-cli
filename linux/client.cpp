@@ -61,11 +61,15 @@ int main(int argc, char *argv[])
     switch (FancyUtil::selectFromMenu())
     {
     case 49:
-        FancyUtil::managementUI(isProgramming);
+        FancyUtil::managementUI(
+            isProgramming,
+            _serialPortIdentifier);
         break;
 
     case 50:
-        FancyUtil::managementUI(isControlMenu);
+        FancyUtil::managementUI(
+            isControlMenu,
+            _serialPortIdentifier);
         break;
 
     case 51:

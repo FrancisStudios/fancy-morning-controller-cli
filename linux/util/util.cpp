@@ -126,7 +126,7 @@ namespace FancyUtil
         return ch;
     }
 
-    void managementUI(bool isProgramming)
+    void managementUI(bool isProgramming, char* tty_portname)
     {
         bool exit = false;
         initscr();

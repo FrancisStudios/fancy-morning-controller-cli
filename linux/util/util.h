@@ -27,7 +27,7 @@ namespace FancyUtil
     void printMenu();
     void printManagementHeader(bool isProgramming);
     void printControlsHeader(bool isProgramming);
-    void managementUI(bool isProgramming);
+    void managementUI(bool isProgramming, char* tty_portname);
     bool testSerialConnection(serialib serial, char *_serialPortIdentifier);
     int selectFromMenu();
     int defauldBaud();
