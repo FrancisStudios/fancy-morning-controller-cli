@@ -126,7 +126,7 @@ namespace FancyUtil
         return ch;
     }
 
-    void managementUI(bool isProgramming, char* tty_portname)
+    void managementUI(bool isProgramming, char *tty_portname)
     {
         bool exit = false;
         initscr();
@@ -142,6 +142,9 @@ namespace FancyUtil
             int ch = getch();
 
             printw("Mennyomva %i\n", ch);
+
+            if (ch == 0x65 || ch == 0x1b)
+                exit = true; // TODO: confirm dialog
         }
 
         endwin();
