@@ -13,11 +13,9 @@
 #include <stdio.h>
 #include "../lib/serialib.h"
 
-namespace FancyHeadless 
+namespace FancyHeadless
 {
-    
+    void dispatch(char *arg);
 }
-
-
 
 #endif

@@ -8,6 +8,7 @@
 
 #include "./lib/serialib.h"
 #include "./util/util.h"
+#include "./util/headless.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <chrono>
@@ -23,6 +24,7 @@ int main(int argc, char *argv[])
     bool isSerialDeviceConfirmed = false;
     bool isProgramming = true;
     bool isControlMenu = !isProgramming;
+    bool headlessMode = false;
     char ttyDeviceId[32];
     char _serialPortIdentifier[50] = "";
     strcpy(_serialPortIdentifier, FancyUtil::serialDevicePrefix());
@@ -46,38 +48,52 @@ int main(int argc, char *argv[])
     }
     else
     {
-        /* If tty Device Is Passed As An Arg */
-        const char *serialPortIdInput = argv[1];
-        strcpy(_serialPortIdentifier, serialPortIdInput);
+        switch (argc)
+        {
+        case 2:
+        { /* If tty device is passed as an arg (auto tty) */
+            const char *serialPortIdInput = argv[1];
+            strcpy(_serialPortIdentifier, serialPortIdInput);
 
-        FancyUtil::printBanner();
-        FancyUtil::printSerialPortInserted(_serialPortIdentifier);
+            FancyUtil::printBanner();
+            FancyUtil::printSerialPortInserted(_serialPortIdentifier);
 
-        FancyUtil::testSerialConnection(serial, _serialPortIdentifier);
+            FancyUtil::testSerialConnection(serial, _serialPortIdentifier);
+            break;
+        }
+        case 3:
+            /* If tty and pwm value byte is passed as an arg (headless) */
+            headlessMode = true;
+            FancyHeadless::dispatch(argv[2]);
+            break;
+        }
     }
 
-    sleep_for(milliseconds(1000));
-
-    switch (FancyUtil::selectFromMenu())
+    if (!headlessMode)
     {
-    case 49:
-        FancyUtil::managementUI(
-            isProgramming,
-            _serialPortIdentifier);
-        break;
+        sleep_for(milliseconds(1000));
 
-    case 50:
-        FancyUtil::managementUI(
-            isControlMenu,
-            _serialPortIdentifier);
-        break;
+        switch (FancyUtil::selectFromMenu())
+        {
+        case 49:
+            FancyUtil::managementUI(
+                isProgramming,
+                _serialPortIdentifier);
+            break;
 
-    case 51:
-        break;
+        case 50:
+            FancyUtil::managementUI(
+                isControlMenu,
+                _serialPortIdentifier);
+            break;
 
-    default:
-        /* TODO: maybe some error handling */
-        break;
+        case 51:
+            break;
+
+        default:
+            /* TODO: maybe some error handling */
+            break;
+        }
     }
 
     serial.closeDevice();
