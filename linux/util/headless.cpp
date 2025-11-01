@@ -8,6 +8,9 @@
 
 #include "headless.h"
 
+#define NO_ERRORS 0
+#define ERROR 1
+
 const char *HEADLESS_PREFIX = "[Fancy Morning] ";
 
 using namespace std::chrono;
@@ -20,24 +23,20 @@ namespace FancyHeadless
     void dispatch(char *serialPortId, char *arg)
     {
 
-        printf("%s Starting in headless mode...\n", HEADLESS_PREFIX);
-        headlessConnectionTest(serialPortId);
+        FancyUtil::printStartingHeadlessMode(HEADLESS_PREFIX);
 
-        /* SUCCESS / FAIL */
-        printf("%s Attempting handshake...\n", HEADLESS_PREFIX);
-        /* ATTEMPT 1,2,3 */
-        /* SUCCESS / FAIL */
-        printf("%s Sending [%s] to Fancy Morning Controller Device on [%s]\n", HEADLESS_PREFIX, arg, serialPortId);
-        /* SUCCESS / FAIL */
+        bool connectionTestsPass = headlessConnectionTest(serialPortId) == NO_ERRORS && headlessHandshakeTest(serialPortId) == NO_ERRORS;
 
-        // printf("headless mode \n");
-        // printf("arg: %s", arg);
-
-        // if (strcmp(arg, "hello\n"))
-        //     printf("yes, hello \n");
+        if (connectionTestsPass)
+        {
+            printf("%s Sending [%s] to Fancy Morning Controller Device on [%s]\n",
+                   HEADLESS_PREFIX,
+                   arg,
+                   serialPortId);
+        }
     }
 
-    void headlessConnectionTest(char *serialPortId)
+    int headlessConnectionTest(char *serialPortId)
     {
         int connectionAttempt = 1;
         char _serialError = 0xff;
@@ -74,5 +73,39 @@ namespace FancyHeadless
             printf("%s Succesfully connected to [%s]\n",
                    HEADLESS_PREFIX,
                    serialPortId);
+
+        return _serialError == 1 ? 0 : 1;
+    }
+
+    int headlessHandshakeTest(char *serialPortId)
+    {
+        int errorState = ERROR;
+        char serialBuffer[15] = "";
+
+        strcpy(serialBuffer,
+               FancyUtil::handshakeSign());
+
+        FancyUtil::printAttemptingHeadlessHandshake(HEADLESS_PREFIX);
+
+        serial.writeString(serialBuffer);
+        serial.readString(serialBuffer, '\n', 15, 2000); // TODO: should have 3 attempts
+
+        int handshakeResponseCorrect =
+            strcmp(serialBuffer, FancyUtil::handshakeResponse()) == NO_ERRORS
+                ? NO_ERRORS
+                : ERROR;
+
+        if (handshakeResponseCorrect == NO_ERRORS)
+        {
+            FancyUtil::printHeadlessHandshakeSuccess(HEADLESS_PREFIX);
+            errorState = NO_ERRORS;
+        }
+        else
+        {
+            FancyUtil::printHeadlessHandshakeFailed(HEADLESS_PREFIX);
+            errorState = ERROR;
+        }
+
+        return errorState;
     }
 }

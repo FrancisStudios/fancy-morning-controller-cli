@@ -19,7 +19,8 @@
 namespace FancyHeadless
 {
     void dispatch(char *serialPortId, char *arg);
-    void headlessConnectionTest(char *serialPortId);
+    int headlessConnectionTest(char *serialPortId);
+    int headlessHandshakeTest(char *serialPortId);
 }
 
 #endif

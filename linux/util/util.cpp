@@ -141,7 +141,7 @@ namespace FancyUtil
             refresh();
 
             int ch = getch();
-            
+
             printUIElements();
             printw("Mennyomva %i\n", ch);
 
@@ -246,5 +246,29 @@ namespace FancyUtil
         const char *NEXT = "[N]ext";
 
         printw("%s   %s   %s", EXIT, START, NEXT);
+    }
+
+    void printStartingHeadlessMode(const char *HEADLESS_PREFIX)
+    {
+        printf("%s Starting in headless mode...\n",
+               HEADLESS_PREFIX);
+    }
+
+    void printAttemptingHeadlessHandshake(const char *HEADLESS_PREFIX)
+    {
+        printf("%s Attempting handshake...\n",
+               HEADLESS_PREFIX);
+    }
+
+    void printHeadlessHandshakeSuccess(const char *HEADLESS_PREFIX)
+    {
+        printf("%s Handshake with Fancy Morning Device was successful! \n",
+               HEADLESS_PREFIX);
+    }
+
+    void printHeadlessHandshakeFailed(const char *HEADLESS_PREFIX)
+    {
+        printf("%s Handshake with device failed. Unknown handshake signature! \n",
+               HEADLESS_PREFIX);
     }
 }

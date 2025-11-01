@@ -18,6 +18,10 @@
 namespace FancyUtil
 {
     void printBanner(bool isCanonical = true);
+    void printStartingHeadlessMode(const char *HEADLESS_PREFIX);
+    void printAttemptingHeadlessHandshake(const char *HEADLESS_PREFIX);
+    void printHeadlessHandshakeSuccess(const char *HEADLESS_PREFIX);
+    void printHeadlessHandshakeFailed(const char *HEADLESS_PREFIX);
     void printNoSerialPortSelectedWording();
     void printFetchSerialError();
     void printFetchSerialSuccess();
@@ -28,7 +32,7 @@ namespace FancyUtil
     void printManagementHeader(bool isProgramming);
     void printControlsHeader(bool isProgramming);
     void printUIElements();
-    void managementUI(bool isProgramming, char* tty_portname);
+    void managementUI(bool isProgramming, char *tty_portname);
     bool testSerialConnection(serialib serial, char *_serialPortIdentifier);
     int selectFromMenu();
     int defauldBaud();
