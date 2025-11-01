@@ -16,6 +16,8 @@ But in the winter, waking up is hard, since the sun only rises late - and I have
 
 As a great enginner _- that I am -_ I can design an electronic device that can PWM control some lights in my home so I wake up naturally. So I sat down in front of KiCAD and started desigining. This is the USB driver for the thing.
 
+![board image](./docs/board-side.png)
+
 ## 🤖 How to use
 
 ### r2.x devices
