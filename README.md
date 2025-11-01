@@ -3,8 +3,17 @@
 Fancy Morning is an electronic device, developed by your truly `Francis Studios` to control LED strips automatically to softly wake up myself in the dark winter mornings.
 
 This application is a CLI and a driver for managing the Fancy Morning Controller Device.
+### ⬇️ Downloads 
+
+#### 🐧 Linux
+- 🟢 [fancy-client-linux-CLI](./linux/dist/fancy-client) test executable `v0.1 pre-release`
+
+#### 🪟 Windows
+- 🔴 No available port for windows yet - WIP
 
 ![cli preview image](./docs/preview.png)
+
+## 📖 How did it came to be
 
 ### 🔴 [ISSUE]
 
