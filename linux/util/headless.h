@@ -15,7 +15,7 @@
 
 namespace FancyHeadless
 {
-    void dispatch(char *arg);
+    void dispatch(char *serialPortId, char *arg);
 }
 
 #endif

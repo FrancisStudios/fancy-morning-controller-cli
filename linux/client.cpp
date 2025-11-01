@@ -48,12 +48,14 @@ int main(int argc, char *argv[])
     }
     else
     {
+
+        const char *serialPortIdInput = argv[1];
+        strcpy(_serialPortIdentifier, serialPortIdInput);
+
         switch (argc)
         {
         case 2:
         { /* If tty device is passed as an arg (auto tty) */
-            const char *serialPortIdInput = argv[1];
-            strcpy(_serialPortIdentifier, serialPortIdInput);
 
             FancyUtil::printBanner();
             FancyUtil::printSerialPortInserted(_serialPortIdentifier);
@@ -64,7 +66,7 @@ int main(int argc, char *argv[])
         case 3:
             /* If tty and pwm value byte is passed as an arg (headless) */
             headlessMode = true;
-            FancyHeadless::dispatch(argv[2]);
+            FancyHeadless::dispatch(_serialPortIdentifier, argv[2]);
             break;
         }
     }
