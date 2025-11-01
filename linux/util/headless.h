@@ -13,6 +13,11 @@
 #include <stdio.h>
 #include "../lib/serialib.h"
 
+namespace FancyHeadless 
+{
+    
+}
+
 
 
 #endif
