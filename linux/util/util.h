@@ -27,6 +27,7 @@ namespace FancyUtil
     void printMenu();
     void printManagementHeader(bool isProgramming);
     void printControlsHeader(bool isProgramming);
+    void printUIElements();
     void managementUI(bool isProgramming, char* tty_portname);
     bool testSerialConnection(serialib serial, char *_serialPortIdentifier);
     int selectFromMenu();
@@ -34,10 +35,6 @@ namespace FancyUtil
     const char *serialDevicePrefix();
     const char *handshakeSign();
     const char *handshakeResponse();
-};
-
-namespace FancyAscii
-{
 };
 
 #endif

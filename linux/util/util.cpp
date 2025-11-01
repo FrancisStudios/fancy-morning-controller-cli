@@ -139,8 +139,10 @@ namespace FancyUtil
         while (!exit)
         {
             refresh();
-            int ch = getch();
 
+            int ch = getch();
+            
+            printUIElements();
             printw("Mennyomva %i\n", ch);
 
             if (ch == 0x65 || ch == 0x1b)
@@ -148,6 +150,11 @@ namespace FancyUtil
         }
 
         endwin();
+    }
+
+    void printUIElements()
+    {
+        printw("UI elements will come here");
     }
 
     void printSerialPortInserted(char *portID)
