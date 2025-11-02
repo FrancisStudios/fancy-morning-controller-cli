@@ -55,7 +55,8 @@ int main(int argc, char *argv[])
         switch (argc)
         {
         case 2:
-        { /* If tty device is passed as an arg (auto tty) */
+        {
+            /* If tty device is passed as an arg (auto tty) */
 
             FancyUtil::printBanner();
             FancyUtil::printSerialPortInserted(_serialPortIdentifier);

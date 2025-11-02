@@ -10,6 +10,7 @@
 
 #define NO_ERRORS 0
 #define ERROR 1
+#define CRITICAL_ERROR -1
 
 const char *HEADLESS_PREFIX = "[Fancy Morning] ";
 
@@ -29,10 +30,15 @@ namespace FancyHeadless
 
         if (connectionTestsPass)
         {
-            printf("%s Sending [%s] to Fancy Morning Controller Device on [%s]\n",
-                   HEADLESS_PREFIX,
-                   arg,
-                   serialPortId);
+
+        // TODO: validate input might not return error state but 0 or valid value instead (?)
+            validateInput(arg) == NO_ERRORS
+                ? printf("%s Sending [%i] to Fancy Morning Controller Device on [%s]\n",
+                         HEADLESS_PREFIX,
+                         atoi(arg),
+                         serialPortId)
+
+                : printf("Error while validating input...");
         }
     }
 
@@ -107,5 +113,31 @@ namespace FancyHeadless
         }
 
         return errorState;
+    }
+
+    int validateInput(char *arg)
+    {
+
+        int inputPWMValue = 0;
+
+        try
+        {
+            inputPWMValue = atoi(arg);
+            printf("Sent value is: %i \n", inputPWMValue);
+        }
+        catch (std::exception const &e)
+        {
+            return CRITICAL_ERROR;
+        }
+
+        bool validationCriteria = (0x00 <= inputPWMValue) && (inputPWMValue <= 0xff);
+
+        return validationCriteria
+                   ? NO_ERRORS
+                   : ERROR;
+    }
+
+    void sendPWM()
+    {
     }
 }

@@ -21,6 +21,8 @@ namespace FancyHeadless
     void dispatch(char *serialPortId, char *arg);
     int headlessConnectionTest(char *serialPortId);
     int headlessHandshakeTest(char *serialPortId);
+    int validateInput(char *arg);
+    void sendPWM();
 }
 
 #endif
