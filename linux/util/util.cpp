@@ -8,7 +8,9 @@
 
 #include "util.h"
 
-const int DEFAULT_BAUDRATE = 9600;
+#define PWM_SIGN "pp"
+#define DEFAULT_BAUDRATE 9600
+
 constexpr const char SERIAL_DEVICE_PREFIX[6] = "/dev/";
 constexpr const char HANDSHAKE_SIGN[11] = "handshake\n";
 constexpr const char HANDSHAKE_RESPONSE[14] = "FancyMorning";
@@ -53,6 +55,11 @@ namespace FancyUtil
     const char *handshakeSign()
     {
         return HANDSHAKE_SIGN;
+    }
+
+    const char *pwmSignature()
+    {
+        return PWM_SIGN;
     }
 
     const char *handshakeResponse()

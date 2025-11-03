@@ -22,7 +22,7 @@ namespace FancyHeadless
     int headlessConnectionTest(char *serialPortId);
     int headlessHandshakeTest(char *serialPortId);
     int validateInput(char *arg);
-    void sendPWM();
+    bool sendPWM(int pwm);
 }
 
 #endif

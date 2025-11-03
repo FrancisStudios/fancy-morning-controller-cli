@@ -30,15 +30,17 @@ namespace FancyHeadless
 
         if (connectionTestsPass)
         {
+            int PWM_DC = validateInput(arg);
 
-        // TODO: validate input might not return error state but 0 or valid value instead (?)
-            validateInput(arg) == NO_ERRORS
-                ? printf("%s Sending [%i] to Fancy Morning Controller Device on [%s]\n",
-                         HEADLESS_PREFIX,
-                         atoi(arg),
-                         serialPortId)
+            if (sendPWM(PWM_DC))
+            {
+                // TODO: sent and acknowledged
+            }
 
-                : printf("Error while validating input...");
+            printf("%s Sending [%i] to Fancy Morning Controller Device on [%s]\n",
+                   HEADLESS_PREFIX,
+                   PWM_DC,
+                   serialPortId);
         }
     }
 
@@ -123,7 +125,6 @@ namespace FancyHeadless
         try
         {
             inputPWMValue = atoi(arg);
-            printf("Sent value is: %i \n", inputPWMValue);
         }
         catch (std::exception const &e)
         {
@@ -133,11 +134,18 @@ namespace FancyHeadless
         bool validationCriteria = (0x00 <= inputPWMValue) && (inputPWMValue <= 0xff);
 
         return validationCriteria
-                   ? NO_ERRORS
+                   ? inputPWMValue
                    : ERROR;
     }
 
-    void sendPWM()
+    bool sendPWM(int pwm)
     {
+        std::string pwmAsString = std::to_string(pwm);
+        const char *pwmCharPtr = pwmAsString.c_str();
+
+        serial.writeString("pp");
+        serial.writeString(pwmCharPtr);
+
+        return true;
     }
 }

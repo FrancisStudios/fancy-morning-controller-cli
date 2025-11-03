@@ -36,6 +36,7 @@ namespace FancyUtil
     bool testSerialConnection(serialib serial, char *_serialPortIdentifier);
     int selectFromMenu();
     int defauldBaud();
+    const char *pwmSignature();
     const char *serialDevicePrefix();
     const char *handshakeSign();
     const char *handshakeResponse();
