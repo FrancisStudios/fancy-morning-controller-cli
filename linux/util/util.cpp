@@ -9,6 +9,7 @@
 #include "util.h"
 
 #define PWM_SIGN "pp"
+#define ACK_SIGN "ack"
 #define DEFAULT_BAUDRATE 9600
 
 constexpr const char SERIAL_DEVICE_PREFIX[6] = "/dev/";
@@ -60,6 +61,11 @@ namespace FancyUtil
     const char *pwmSignature()
     {
         return PWM_SIGN;
+    }
+
+    const char *acknowledgeSignature()
+    {
+        return ACK_SIGN;
     }
 
     const char *handshakeResponse()

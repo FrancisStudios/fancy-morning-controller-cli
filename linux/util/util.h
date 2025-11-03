@@ -37,6 +37,7 @@ namespace FancyUtil
     int selectFromMenu();
     int defauldBaud();
     const char *pwmSignature();
+    const char *acknowledgeSignature();
     const char *serialDevicePrefix();
     const char *handshakeSign();
     const char *handshakeResponse();

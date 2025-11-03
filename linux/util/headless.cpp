@@ -35,12 +35,16 @@ namespace FancyHeadless
             if (sendPWM(PWM_DC))
             {
                 // TODO: sent and acknowledged
+                printf("successful");
+            } else {
+                printf("failed");
             }
 
-            printf("%s Sending [%i] to Fancy Morning Controller Device on [%s]\n",
-                   HEADLESS_PREFIX,
-                   PWM_DC,
-                   serialPortId);
+            // printf("%s Sending [%i] to Fancy Morning Controller Device on [%s]\n",
+            //        HEADLESS_PREFIX,
+            //        PWM_DC, 
+            //        serialPortId);
+            // TODO: this 
         }
     }
 
@@ -140,12 +144,16 @@ namespace FancyHeadless
 
     bool sendPWM(int pwm)
     {
+        char serialBuffer[15] = "";
+
         std::string pwmAsString = std::to_string(pwm);
         const char *pwmCharPtr = pwmAsString.c_str();
 
-        serial.writeString("pp");
+        serial.writeString(FancyUtil::pwmSignature());
         serial.writeString(pwmCharPtr);
 
-        return true;
+        serial.readString(serialBuffer, '\n', 15, 2000);
+
+        return strcmp(serialBuffer, FancyUtil::acknowledgeSignature()) == NO_ERRORS;
     }
 }
