@@ -23,6 +23,8 @@ namespace FancyHeadless
 {
     void dispatch(char *serialPortId, char *arg)
     {
+        // TODO: do a --nocheck flag for the executable where
+        // TODO: users can disalbe checks and just send PWM as it is (with validation ofc)
 
         FancyUtil::printStartingHeadlessMode(HEADLESS_PREFIX);
 
