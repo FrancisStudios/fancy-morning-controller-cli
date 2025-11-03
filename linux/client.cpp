@@ -14,6 +14,8 @@
 #include <chrono>
 #include <thread>
 
+#define SWITCH_NOCHECK "--nocheck"
+
 int main(int argc, char *argv[])
 {
 
@@ -68,6 +70,15 @@ int main(int argc, char *argv[])
             /* If tty and pwm value byte is passed as an arg (headless) */
             headlessMode = true;
             FancyHeadless::dispatch(_serialPortIdentifier, argv[2]);
+            break;
+
+        case 4:
+            /* If there is a switch added */
+            headlessMode = true;
+            
+            if (strcmp(argv[3], SWITCH_NOCHECK) == 0)
+                FancyHeadless::dispatch(_serialPortIdentifier, argv[2], false);
+
             break;
         }
     }

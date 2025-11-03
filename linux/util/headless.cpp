@@ -21,14 +21,18 @@ serialib serial;
 
 namespace FancyHeadless
 {
-    void dispatch(char *serialPortId, char *arg)
+    void dispatch(char *serialPortId, char *arg, bool check)
     {
-        // TODO: do a --nocheck flag for the executable where
-        // TODO: users can disalbe checks and just send PWM as it is (with validation ofc)
 
         FancyUtil::printStartingHeadlessMode(HEADLESS_PREFIX);
 
-        bool connectionTestsPass = headlessConnectionTest(serialPortId) == NO_ERRORS && headlessHandshakeTest(serialPortId) == NO_ERRORS;
+        bool connectionTestsPass = false;
+
+        check
+            ? connectionTestsPass =
+                  (headlessConnectionTest(serialPortId) == NO_ERRORS) 
+                  && (headlessHandshakeTest(serialPortId) == NO_ERRORS)
+            : connectionTestsPass = true;
 
         if (connectionTestsPass)
         {
@@ -38,15 +42,17 @@ namespace FancyHeadless
             {
                 // TODO: sent and acknowledged
                 printf("successful");
-            } else {
+            }
+            else
+            {
                 printf("failed");
             }
 
             // printf("%s Sending [%i] to Fancy Morning Controller Device on [%s]\n",
             //        HEADLESS_PREFIX,
-            //        PWM_DC, 
+            //        PWM_DC,
             //        serialPortId);
-            // TODO: this 
+            // TODO: this
         }
     }
 
