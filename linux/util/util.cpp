@@ -8,7 +8,10 @@
 
 #include "util.h"
 
-const int DEFAULT_BAUDRATE = 9600;
+#define PWM_SIGN "pp"
+#define ACK_SIGN "ack"
+#define DEFAULT_BAUDRATE 9600
+
 constexpr const char SERIAL_DEVICE_PREFIX[6] = "/dev/";
 constexpr const char HANDSHAKE_SIGN[11] = "handshake\n";
 constexpr const char HANDSHAKE_RESPONSE[14] = "FancyMorning";
@@ -53,6 +56,16 @@ namespace FancyUtil
     const char *handshakeSign()
     {
         return HANDSHAKE_SIGN;
+    }
+
+    const char *pwmSignature()
+    {
+        return PWM_SIGN;
+    }
+
+    const char *acknowledgeSignature()
+    {
+        return ACK_SIGN;
     }
 
     const char *handshakeResponse()
@@ -141,7 +154,7 @@ namespace FancyUtil
             refresh();
 
             int ch = getch();
-            
+
             printUIElements();
             printw("Mennyomva %i\n", ch);
 
@@ -246,5 +259,29 @@ namespace FancyUtil
         const char *NEXT = "[N]ext";
 
         printw("%s   %s   %s", EXIT, START, NEXT);
+    }
+
+    void printStartingHeadlessMode(const char *HEADLESS_PREFIX)
+    {
+        printf("%s Starting in headless mode...\n",
+               HEADLESS_PREFIX);
+    }
+
+    void printAttemptingHeadlessHandshake(const char *HEADLESS_PREFIX)
+    {
+        printf("%s Attempting handshake...\n",
+               HEADLESS_PREFIX);
+    }
+
+    void printHeadlessHandshakeSuccess(const char *HEADLESS_PREFIX)
+    {
+        printf("%s Handshake with Fancy Morning Device was successful! \n",
+               HEADLESS_PREFIX);
+    }
+
+    void printHeadlessHandshakeFailed(const char *HEADLESS_PREFIX)
+    {
+        printf("%s Handshake with device failed. Unknown handshake signature! \n",
+               HEADLESS_PREFIX);
     }
 }

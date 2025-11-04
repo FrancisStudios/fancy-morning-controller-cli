@@ -14,6 +14,8 @@
 #include <chrono>
 #include <thread>
 
+#define SWITCH_NOCHECK "--nocheck"
+
 int main(int argc, char *argv[])
 {
 
@@ -48,12 +50,15 @@ int main(int argc, char *argv[])
     }
     else
     {
+
+        const char *serialPortIdInput = argv[1];
+        strcpy(_serialPortIdentifier, serialPortIdInput);
+
         switch (argc)
         {
         case 2:
-        { /* If tty device is passed as an arg (auto tty) */
-            const char *serialPortIdInput = argv[1];
-            strcpy(_serialPortIdentifier, serialPortIdInput);
+        {
+            /* If tty device is passed as an arg (auto tty) */
 
             FancyUtil::printBanner();
             FancyUtil::printSerialPortInserted(_serialPortIdentifier);
@@ -64,7 +69,16 @@ int main(int argc, char *argv[])
         case 3:
             /* If tty and pwm value byte is passed as an arg (headless) */
             headlessMode = true;
-            FancyHeadless::dispatch(argv[2]);
+            FancyHeadless::dispatch(_serialPortIdentifier, argv[2]);
+            break;
+
+        case 4:
+            /* If there is a switch added */
+            headlessMode = true;
+            
+            if (strcmp(argv[3], SWITCH_NOCHECK) == 0)
+                FancyHeadless::dispatch(_serialPortIdentifier, argv[2], false);
+
             break;
         }
     }

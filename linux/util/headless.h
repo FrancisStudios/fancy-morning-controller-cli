@@ -12,10 +12,17 @@
 #pragma once
 #include <stdio.h>
 #include "../lib/serialib.h"
+#include "./util.h"
+#include <chrono>
+#include <thread>
 
 namespace FancyHeadless
 {
-    void dispatch(char *arg);
+    void dispatch(char *serialPortId, char *arg, bool check = true);
+    int headlessConnectionTest(char *serialPortId);
+    int headlessHandshakeTest(char *serialPortId);
+    int validateInput(char *arg);
+    bool sendPWM(int pwm);
 }
 
 #endif
