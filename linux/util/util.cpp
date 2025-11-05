@@ -11,10 +11,10 @@
 #define PWM_SIGN "pp"
 #define ACK_SIGN "ack"
 #define DEFAULT_BAUDRATE 9600
+#define HANDSHAKE_RESPONSE "FancyMorning"
 
 constexpr const char SERIAL_DEVICE_PREFIX[6] = "/dev/";
 constexpr const char HANDSHAKE_SIGN[11] = "handshake\n";
-constexpr const char HANDSHAKE_RESPONSE[14] = "FancyMorning";
 
 const char *Fancy[] = {
     " _______                         ",
@@ -95,6 +95,8 @@ namespace FancyUtil
 
             /* Read Response Into Buffer */
             serial.readString(buffer, '\n', 50, 2000);
+            
+            printf("[%s]\n", buffer);
 
             if (strcmp(buffer, handshakeResponse()) == 0)
             {
