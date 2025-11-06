@@ -189,6 +189,11 @@ namespace FancyUtil
         return str;
     }
 
+    void printHandshakeAttemptCounter(const char *HEADLESS_PREFIX, int count, int code)
+    {
+        printf("%s Handshake attempt #%i -> diff [%i] \n", HEADLESS_PREFIX, count + 1, code);
+    }
+
     void printUIElements()
     {
         printw("UI elements will come here");

@@ -28,6 +28,7 @@ namespace FancyUtil
     void printHandshakeFailed();
     void printHandshakeSuccess();
     void printSerialPortInserted(char *portID);
+    void printHandshakeAttemptCounter(const char *HEADLESS_PREFIX, int count, int code);
     void printMenu();
     void printManagementHeader(bool isProgramming);
     void printControlsHeader(bool isProgramming);

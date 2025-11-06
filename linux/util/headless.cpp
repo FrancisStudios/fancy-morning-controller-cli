@@ -30,8 +30,7 @@ namespace FancyHeadless
 
         check
             ? connectionTestsPass =
-                  (headlessConnectionTest(serialPortId) == NO_ERRORS) 
-                  && (headlessHandshakeTest(serialPortId) == NO_ERRORS)
+                  (headlessConnectionTest(serialPortId) == NO_ERRORS) && (headlessHandshakeTest(serialPortId) == NO_ERRORS)
             : connectionTestsPass = true;
 
         if (connectionTestsPass)
@@ -108,12 +107,33 @@ namespace FancyHeadless
         FancyUtil::printAttemptingHeadlessHandshake(HEADLESS_PREFIX);
 
         serial.writeString(serialBuffer);
-        serial.readString(serialBuffer, '\n', 15, 2000); // TODO: should have 3 attempts
 
-        int handshakeResponseCorrect =
-            strcmp(serialBuffer, FancyUtil::handshakeResponse()) == NO_ERRORS
-                ? NO_ERRORS
-                : ERROR;
+        int handshakeAttempts = 0;
+        int handshakeResponseCorrect;
+
+        while (handshakeAttempts < 3)
+        {
+            serial.readString(serialBuffer, '\n', 15, 2000);
+            int stringBufferDifferentialComparison = strcmp(
+                FancyUtil::trim(serialBuffer),
+                FancyUtil::handshakeResponse());
+
+            FancyUtil::printHandshakeAttemptCounter(
+                HEADLESS_PREFIX,
+                handshakeAttempts,
+                stringBufferDifferentialComparison);
+
+            handshakeResponseCorrect =
+                stringBufferDifferentialComparison == NO_ERRORS
+                    ? NO_ERRORS
+                    : ERROR;
+
+            if (handshakeResponseCorrect == NO_ERRORS)
+                break;
+
+            sleep_for(milliseconds(500));
+            handshakeAttempts++;
+        }
 
         if (handshakeResponseCorrect == NO_ERRORS)
         {
@@ -162,6 +182,8 @@ namespace FancyHeadless
 
         serial.readString(serialBuffer, '\n', 15, 2000);
 
-        return strcmp(serialBuffer, FancyUtil::acknowledgeSignature()) == NO_ERRORS;
+        printf("received [%s] \n", serialBuffer);
+
+        return strcmp(FancyUtil::trim(serialBuffer), FancyUtil::acknowledgeSignature()) == NO_ERRORS;
     }
 }
