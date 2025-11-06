@@ -11,7 +11,7 @@
 #define PWM_SIGN "pp"
 #define ACK_SIGN "ack"
 #define DEFAULT_BAUDRATE 9600
-#define HANDSHAKE_RESPONSE "FancyMorning\r\n"
+#define HANDSHAKE_RESPONSE "FancyMorning"
 
 constexpr const char SERIAL_DEVICE_PREFIX[6] = "/dev/";
 constexpr const char HANDSHAKE_SIGN[11] = "handshake\n";
@@ -96,7 +96,7 @@ namespace FancyUtil
             /* Read Response Into Buffer */
             serial.readString(buffer, '\n', 15, 2000);
 
-            if (strcmp(buffer, handshakeResponse()) == 0)
+            if (strcmp(trim(buffer), handshakeResponse()) == 0)
             {
                 printFetchSerialSuccess();
                 printHandshakeSuccess();
@@ -163,6 +163,30 @@ namespace FancyUtil
         }
 
         endwin();
+    }
+
+    char *trim(char *str)
+    {
+
+        if (str == nullptr)
+            return nullptr;
+
+        size_t length = strlen(str);
+
+        if (length == 0)
+            return str;
+
+        size_t end = length;
+
+        while (end > 0)
+        {
+            if (std::isspace(static_cast<unsigned char>(str[end - 1])))
+                end--;
+            else
+                break;
+        }
+        str[end] = '\0';
+        return str;
     }
 
     void printUIElements()
