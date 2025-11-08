@@ -113,7 +113,11 @@ namespace FancyHeadless
 
         while (handshakeAttempts < 3)
         {
-            serial.readString(serialBuffer, '\n', 15, 2000);
+            serial.openDevice(
+                serialPortId,
+                FancyUtil::defauldBaud());
+
+            serial.readString(serialBuffer, '\n', 15, 500);
             int stringBufferDifferentialComparison = strcmp(
                 FancyUtil::trim(serialBuffer),
                 FancyUtil::handshakeResponse());
@@ -131,7 +135,8 @@ namespace FancyHeadless
             if (handshakeResponseCorrect == NO_ERRORS)
                 break;
 
-            sleep_for(milliseconds(500));
+            serial.closeDevice();
+            sleep_for(milliseconds(1000));
             handshakeAttempts++;
         }
 
